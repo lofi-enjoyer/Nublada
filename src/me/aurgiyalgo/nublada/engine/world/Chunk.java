@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -40,12 +41,14 @@ public class Chunk {
 
     // TODO: 24/03/2022 Make the core count customizable
     private static final ScheduledExecutorService meshService =
-            new ScheduledThreadPoolExecutor(2, r -> {
-        Thread thread = new Thread(r, "Meshing Thread");
-        thread.setDaemon(true);
+            new ScheduledThreadPoolExecutor(2, r ->
+            {
+                Thread thread = new Thread(r, "Meshing Thread");
+                thread.setDaemon(true);
 
-        return thread;
-    });
+                return thread;
+            }
+    );
 
     private short[] voxels;
     private final Vector2i position;
@@ -123,6 +126,12 @@ public class Chunk {
                 data[i * 2] = (byte) (voxels[i] & 0xff);
                 data[i * 2 + 1] = (byte) ((voxels[i] >> 8) & 0xff);
             }
+
+            String tal = new String(data);
+
+            byte[] newData = tal.getBytes();
+
+            System.out.println(Arrays.equals(data, newData));
 
             dos.write(data);
             dos.flush();

@@ -25,7 +25,7 @@ public class Window {
 
     private boolean wireframe;
     private boolean faceCulling;
-    private boolean vsync = true;
+    private boolean vsync = false;
 
     // TODO: 09/02/2022 Make this a singleton
     public Window(int width, int height, String title) {
